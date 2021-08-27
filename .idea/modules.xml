@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/quercus-4.0.64-src.iml" filepath="$PROJECT_DIR$/quercus-4.0.64-src.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dc-quercus.iml" filepath="$PROJECT_DIR$/dc-quercus.iml" />
     </modules>
   </component>
 </project>
