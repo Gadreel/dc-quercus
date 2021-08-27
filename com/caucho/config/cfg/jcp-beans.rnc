@@ -1,0 +1,125 @@
+default namespace jcp = "http://xmlns.jcp.org/xml/ns/javaee"
+
+namespace xsi="http://www.w3.org/2001/XMLSchema-instance"
+namespace n=""
+
+start = w_beans | jcp_beans | compat_beans
+
+jcp_Any = text | (attribute * {string} | element * { jcp_Any })*
+
+jcp_alternatives = element alternatives {
+  jcp_class*
+  & jcp_stereotype*
+}
+
+jcp_bean-Custom = element * - jcp:* {
+  (jcp_bean-Field-Custom*
+
+   & (attribute value { string }
+      | element value { jcp_Any })*
+  
+   & (attribute name { string }
+      | element Named { attribute value { string }? | string }?)
+  
+   & jcp_new?
+  
+   & element ApplicationScoped { empty }?
+   & element ConversationScoped { empty }?
+   & element RequestScoped { empty }?
+   & element SessionScoped { empty }?
+   & element Dependent { empty }?
+   
+   & element Production { jcp_bean-Custom* }?
+   
+   & element Default { empty }?
+   
+   & element Decorates { empty }?
+  )
+  | string
+}
+
+jcp_bean-Field-Custom = element * - jcp:* {
+  jcp_Any
+}
+
+jcp_binding = element binding {
+  string
+}
+
+jcp_class = element class {
+  string
+}
+
+jcp_deploy = element Deploy {
+  jcp_bean-Field-Custom*
+  & jcp_standard?
+  & jcp_production?
+  & jcp_class*
+  & jcp_stereotype*
+}
+
+jcp_decorators = element decorators {
+  jcp_class*
+}
+
+jcp_name = element name {
+  string
+}
+
+jcp_init = element init {
+  jcp_Any
+}
+
+jcp_new =
+  attribute new { string }
+  | element new { jcp_Any }
+
+jcp_interceptors = element interceptors {
+  jcp_class*
+}
+
+jcp_producer = element producer {
+  string
+}
+
+jcp_production = element Production {
+  empty
+}  
+
+jcp_stereotype = element stereotype {
+  string
+}
+
+jcp_type = element type {
+  string
+}
+
+jcp_scope = element scope {
+  string
+}
+
+jcp_standard = element Standard {
+  empty
+}  
+
+jcp_beans = element beans {
+  attribute xsi:schemaLocation { string }?
+  
+  & attribute version { string }?
+  
+  & attribute bean-discovery-mode { string }?
+  
+  & jcp_bean-Custom*
+
+  & jcp_decorators?
+  
+  & jcp_deploy?
+  
+  & jcp_alternatives?
+  
+  & jcp_interceptors?
+}
+
+compat_beans = element n:beans {
+  jcp_Any
+}

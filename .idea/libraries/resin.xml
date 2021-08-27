@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="resin">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../quercus/resin/resin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../quercus/resin/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../quercus/resin/javaee-16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../quercus/resin/webutil.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../quercus/resin/javamail-141.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../quercus/resin/jpa-16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../quercus/resin/webservices-extra-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../quercus/resin/javax.faces-2.1.24.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
