@@ -348,6 +348,9 @@ public class Mysqli extends JdbcConnectionResource
       urlBuilder.append("useServerPrepStmts=true");
     }
 
+    // APW added
+    urlBuilder.append("&maxPoolSize=25&pool");
+
     //urlBuilder.append("&useInformationSchema=true");
 
     // required to get the result table name alias,

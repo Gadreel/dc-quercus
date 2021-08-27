@@ -73,7 +73,7 @@ public class TestRun {
                 QuercusPage page = new InterpretedPage(program);
                 Env env = new Env(engine.getQuercus(), page, ws, (QuercusHttpServletRequest) null, (QuercusHttpServletResponse) null);
 
-                //env.addFunction("funTest", new TestFuncCall());
+                env.addFunction("funTest", new TestFuncCall());
 
                 Object value = NullValue.NULL;
 
@@ -82,7 +82,7 @@ public class TestRun {
                 } catch (QuercusExitException var10) {
                 }
 
-                System.out.flush();
+                //System.out.flush();
 
         /*
         try {
