@@ -3,7 +3,7 @@
 echo "1: " . getcwd() . "\n";
 //echo "1: " . dirname(__FILE__) . "\n";
 
-chdir("./temp");
+chdir("./php");
 
 echo "2: " . getcwd() . "\n";
 
@@ -11,8 +11,17 @@ require('./funcs/scommon.php');
 
 //var_dump(ini_get('foo'));
 
-echo "A" . getFoo() . "B";
+echo "A" . getFoo() . "B\n";
 
+echo "-" . funTest() . "*\n";
+
+echo "next\n";
+
+echo "-" . funTest("aa", "bbb") . "*\n";
+
+echo "done\n";
+
+/*
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $db = mysqli_connect("localhost", "writes", "GbKbJBuvTuj7", "write_test");
@@ -38,5 +47,6 @@ else {
 
   mysqli_free_result($result);
 }
+*/
 
 ?>

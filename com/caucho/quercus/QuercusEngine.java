@@ -94,6 +94,10 @@ public class QuercusEngine
     _out = out;
   }
 
+  public OutputStream getOutputStream() {
+    return _out;
+  }
+
   /**
    * Executes the script
    */
@@ -170,11 +174,11 @@ public class QuercusEngine
     return value;
   }
 
-  class OutputStreamStream extends StreamImpl
+  static public class OutputStreamStream extends StreamImpl
   {
     OutputStream _out;
 
-    OutputStreamStream(OutputStream out)
+    public OutputStreamStream(OutputStream out)
     {
       _out = out;
     }
