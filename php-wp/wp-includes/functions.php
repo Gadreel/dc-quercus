@@ -3292,6 +3292,7 @@ function wp_die( $message = '', $title = '', $args = array() ) {
 	}
 
 	if ( wp_doing_ajax() ) {
+        
 		/**
 		 * Filters the callback for killing WordPress execution for Ajax requests.
 		 *
@@ -3301,6 +3302,7 @@ function wp_die( $message = '', $title = '', $args = array() ) {
 		 */
 		$function = apply_filters( 'wp_die_ajax_handler', '_ajax_wp_die_handler' );
 	} elseif ( wp_is_json_request() ) {
+        
 		/**
 		 * Filters the callback for killing WordPress execution for JSON requests.
 		 *
@@ -3310,6 +3312,7 @@ function wp_die( $message = '', $title = '', $args = array() ) {
 		 */
 		$function = apply_filters( 'wp_die_json_handler', '_json_wp_die_handler' );
 	} elseif ( wp_is_jsonp_request() ) {
+        
 		/**
 		 * Filters the callback for killing WordPress execution for JSONP requests.
 		 *
@@ -3319,6 +3322,7 @@ function wp_die( $message = '', $title = '', $args = array() ) {
 		 */
 		$function = apply_filters( 'wp_die_jsonp_handler', '_jsonp_wp_die_handler' );
 	} elseif ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {
+        
 		/**
 		 * Filters the callback for killing WordPress execution for XML-RPC requests.
 		 *
@@ -3332,6 +3336,7 @@ function wp_die( $message = '', $title = '', $args = array() ) {
 			( function_exists( 'is_feed' ) && is_feed()
 			|| function_exists( 'is_comment_feed' ) && is_comment_feed()
 			|| function_exists( 'is_trackback' ) && is_trackback() ) ) {
+        
 		/**
 		 * Filters the callback for killing WordPress execution for XML requests.
 		 *
@@ -3341,6 +3346,7 @@ function wp_die( $message = '', $title = '', $args = array() ) {
 		 */
 		$function = apply_filters( 'wp_die_xml_handler', '_xml_wp_die_handler' );
 	} else {
+        
 		/**
 		 * Filters the callback for killing WordPress execution for all non-Ajax, non-JSON, non-XML requests.
 		 *
@@ -3350,7 +3356,7 @@ function wp_die( $message = '', $title = '', $args = array() ) {
 		 */
 		$function = apply_filters( 'wp_die_handler', '_default_wp_die_handler' );
 	}
-
+        
 	call_user_func( $function, $message, $title, $args );
 }
 
@@ -3369,7 +3375,7 @@ function wp_die( $message = '', $title = '', $args = array() ) {
  */
 function _default_wp_die_handler( $message, $title = '', $args = array() ) {
 	list( $message, $title, $parsed_args ) = _wp_die_process_input( $message, $title, $args );
-
+        
 	if ( is_string( $message ) ) {
 		if ( ! empty( $parsed_args['additional_errors'] ) ) {
 			$message = array_merge(
@@ -3402,6 +3408,7 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ) {
 	}
 
 	if ( ! did_action( 'admin_head' ) ) :
+	    /*
 		if ( ! headers_sent() ) {
 			header( "Content-Type: text/html; charset={$parsed_args['charset']}" );
 			status_header( $parsed_args['response'] );
@@ -3547,6 +3554,11 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ) {
 </body>
 </html>
 	<?php
+	    */
+	endif;
+	
+	echo $message; 
+	
 	if ( $parsed_args['exit'] ) {
 		die();
 	}

@@ -102,6 +102,7 @@ require ABSPATH . WPINC . '/pomo/mo.php';
  * @since 0.71
  */
 global $wpdb;
+
 // Include the wpdb class and, if present, a db.php database drop-in.
 require_wp_db();
 

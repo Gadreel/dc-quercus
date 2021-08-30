@@ -441,6 +441,7 @@ function require_wp_db() {
  * @global string $table_prefix The database table prefix.
  */
 function wp_set_wpdb_vars() {
+
 	global $wpdb, $table_prefix;
 	if ( ! empty( $wpdb->error ) ) {
 		dead_db();
