@@ -1325,6 +1325,7 @@ public class Mysqli extends JdbcConnectionResource
 
       _charset = charset;
 
+      /* APW no longer works in MySQL - doesn't seem necessary
       stmt = conn.createStatement();
       stmt.execute("SELECT * FROM information_schema.SESSION_VARIABLES "
                    + "WHERE VARIABLE_NAME = 'collation_connection'");
@@ -1341,6 +1342,8 @@ public class Mysqli extends JdbcConnectionResource
 
         env.warning(L.l("unable to retrieve collation_connection variable"));
       }
+
+       */
 
       return true;
     }
