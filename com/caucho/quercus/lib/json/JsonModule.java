@@ -110,7 +110,8 @@ public class JsonModule extends AbstractQuercusModule
                                   StringValue s,
                                   @Optional("false") boolean assoc)
   {
-    env.removeSpecialValue("json.last_error");
+    if (env != null)
+      env.removeSpecialValue("json.last_error");
 
     if (s.length() == 0) {
       return new ArrayValueImpl();

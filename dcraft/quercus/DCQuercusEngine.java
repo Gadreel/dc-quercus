@@ -1,12 +1,8 @@
-package io.designcraft.test;
+package dcraft.quercus;
 
 import com.caucho.quercus.QuercusEngine;
 import com.caucho.quercus.QuercusExitException;
-import com.caucho.quercus.env.Env;
-import com.caucho.quercus.env.LongValue;
-import com.caucho.quercus.env.NullValue;
-import com.caucho.quercus.env.Value;
-import com.caucho.quercus.lib.db.JdbcDriverContext;
+import com.caucho.quercus.env.*;
 import com.caucho.quercus.page.InterpretedPage;
 import com.caucho.quercus.page.QuercusPage;
 import com.caucho.quercus.parser.QuercusParser;
@@ -14,42 +10,19 @@ import com.caucho.quercus.program.QuercusProgram;
 import com.caucho.vfs.ReadStream;
 import com.caucho.vfs.StdoutStream;
 import com.caucho.vfs.WriteStream;
-import dcraft.quercus.DCDebug;
+import io.designcraft.test.TestFuncCall;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class TestRunWPDB {
-    public static void main(String[] args) {
-        System.out.println("hi");
+public class DCQuercusEngine extends QuercusEngine {
+    public Value dc_execute(ReadStream reader, Value args) {
+        Value value = NullValue.NULL;
 
-        QuercusEngine engine = new QuercusEngine();
-        engine.init();
-        engine.setIni("foo", "bar");
-        engine.setOutputStream(System.out);
+        try (reader) {
+            QuercusProgram program = QuercusParser.parse(this.getQuercus(), null, reader);
 
-        JdbcDriverContext ctx = engine.getQuercus().getJdbcDriverContext();
-
-        ctx.setProtocol("mysql", "org.mariadb.jdbc.Driver");
-        ctx.setDefaultDriver("org.mariadb.jdbc.Driver");
-
-        com.caucho.vfs.Path path = new com.caucho.vfs.FilePath("./php-wp/test.php");
-
-        //System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> run 1");
-
-        execute(engine, path, 1);
-
-        //System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> final");
-    }
-
-    static public void execute(QuercusEngine engine, com.caucho.vfs.Path path, long runnum) {
-
-        try {
-            ReadStream reader = path.openRead();
-
-            QuercusProgram program = QuercusParser.parse(engine.getQuercus(), null, reader);
-
-            OutputStream os = engine.getOutputStream();
+            OutputStream os = this.getOutputStream();
             WriteStream out;
 
             if (os != null) {
@@ -69,13 +42,10 @@ public class TestRunWPDB {
 
             QuercusPage page = new InterpretedPage(program);
 
-            Env env = new Env(engine.getQuercus(), page, out, null, null);
+            Env env = new Env(this.getQuercus(), page, out, null, null);
 
-            env.addFunction("funTest", new TestFuncCall());
-            env.addFunction("dcdebug", new DCDebug());
-            env.setGlobalValue("runnumber", LongValue.create(runnum));
-
-            Value value = NullValue.NULL;
+            env.addFunction("dc_debug", new DCDebug());
+            env.setGlobalValue("dc_args", args);
 
             try {
                 env.start();
@@ -105,5 +75,7 @@ public class TestRunWPDB {
         catch (IOException x) {
             System.out.println("error: " + x);
         }
+
+        return value;
     }
 }
