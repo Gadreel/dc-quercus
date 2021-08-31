@@ -13,11 +13,13 @@ import com.caucho.vfs.ReadStream;
 import com.caucho.vfs.StdoutStream;
 import com.caucho.vfs.WriteStream;
 import dcraft.quercus.DCQuercusEngine;
+import dcraft.quercus.DCQuercusResult;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.function.Consumer;
 
 public class TestRunDCSimple {
     public static void main(String[] args) {
@@ -43,7 +45,10 @@ public class TestRunDCSimple {
         //Value phpargs = JsonModule.json_decode(null, (StringValue) StringValue.create("{ \"title\": \"top level\", \"number\": 55, \"p\": { \"title\": \"from p\" } }"), true);
 
         try {
-            engine.dc_execute(path.openRead(), phpargs);
+            DCQuercusResult result = engine.dc_execute(path.openRead(), phpargs);
+
+            System.out.println("value: " + result.returned);
+            System.out.println("output: " + result.output);
         } catch (IOException e) {
             e.printStackTrace();
         }

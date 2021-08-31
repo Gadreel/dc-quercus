@@ -438,6 +438,10 @@ public class Env
   private String _lastErrorMessage = null;
   private Location _lastErrorLocation = null;
 
+  public Env(QuercusContext quercus, QuercusPage page, WriteStream out) {
+    this(quercus, page, out, null, null);
+  }
+
   public Env(QuercusContext quercus,
              QuercusPage page,
              WriteStream out,
@@ -1323,6 +1327,13 @@ public class Env
   public WriteStream getOut()
   {
     return _out;
+  }
+
+  public void setOut(WriteStream v) {
+    if (_startTime == 0)
+      throw new QuercusRuntimeException(L.l("cannot change output stream after environment starts"));
+
+    _out = v;
   }
 
   /**

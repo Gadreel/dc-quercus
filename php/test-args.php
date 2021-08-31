@@ -16,4 +16,6 @@ echo "3 - " . $dc_args["p"]["title"] . "\n";
 
 echo "done\n";
 
+return 9.95;
+
 ?>
