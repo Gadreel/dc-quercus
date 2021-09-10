@@ -1622,11 +1622,12 @@ class wpdb {
 				$host = "[$host]";
 			}
 
+			// %%% APW add dbname - java pools seem to want it
 			if ( WP_DEBUG ) {
-				mysqli_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, null, $port, $socket, $client_flags );
+				mysqli_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, $this->dbname, $port, $socket, $client_flags );
 			} else {
 				// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-				@mysqli_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, null, $port, $socket, $client_flags );
+				@mysqli_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, $this->dbname, $port, $socket, $client_flags );
 			}
 
 			if ( $this->dbh->connect_errno ) {
