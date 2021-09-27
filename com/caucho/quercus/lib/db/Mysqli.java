@@ -236,7 +236,7 @@ public class Mysqli extends JdbcConnectionResource
       }
 
       ConnectionEntry jConn
-        = env.getConnection(driver, url, user, pass, ! isNewLink);
+        = env.getConnection(driver, url, user, pass, dbname, ! isNewLink);
 
       Connection conn = jConn.getConnection();
 

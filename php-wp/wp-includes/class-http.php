@@ -188,7 +188,7 @@ class WP_Http {
 			 * @param string $user_agent WordPress user agent string.
 			 * @param string $url        The request URL.
 			 */
-			'user-agent'          => apply_filters( 'http_headers_useragent', 'WordPress/' . get_bloginfo( 'version' ) . '; ' . get_bloginfo( 'url' ), $url ),
+			//'user-agent'          => apply_filters( 'http_headers_useragent', 'WordPress/' . get_bloginfo( 'version' ) . '; ' . get_bloginfo( 'url' ), $url ),
 			/**
 			 * Filters whether to pass URLs through wp_http_validate_url() in an HTTP request.
 			 *
@@ -206,7 +206,7 @@ class WP_Http {
 			'compress'            => false,
 			'decompress'          => true,
 			'sslverify'           => true,
-			'sslcertificates'     => ABSPATH . WPINC . '/certificates/ca-bundle.crt',
+			//'sslcertificates'     => ABSPATH . WPINC . '/certificates/ca-bundle.crt',
 			'stream'              => false,
 			'filename'            => null,
 			'limit_response_size' => null,
@@ -221,6 +221,7 @@ class WP_Http {
 		}
 
 		$parsed_args = wp_parse_args( $args, $defaults );
+
 		/**
 		 * Filters the arguments used in an HTTP request.
 		 *

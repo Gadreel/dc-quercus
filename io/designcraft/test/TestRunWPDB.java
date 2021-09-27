@@ -15,6 +15,7 @@ import com.caucho.vfs.ReadStream;
 import com.caucho.vfs.StdoutStream;
 import com.caucho.vfs.WriteStream;
 import dcraft.quercus.DCDebug;
+import dcraft.quercus.DCQuercusEngine;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -73,6 +74,7 @@ public class TestRunWPDB {
 
             env.addFunction("funTest", new TestFuncCall());
             env.addFunction("dcdebug", new DCDebug());
+            env.addFunction("dc_debug", new DCDebug());
             env.setGlobalValue("runnumber", LongValue.create(runnum));
 
             Value value = NullValue.NULL;

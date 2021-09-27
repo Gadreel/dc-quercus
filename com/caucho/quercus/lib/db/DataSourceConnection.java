@@ -51,7 +51,7 @@ public class DataSourceConnection extends JdbcConnectionResource
     super(env);
 
     _conn = new ConnectionEntry(env);
-    _conn.init(ds, user, pass);
+    _conn.init(ds, user, pass, null);
 
     connectInternal(env, null, user, pass, null, -1, null, 0, null, null, false, false);
   }

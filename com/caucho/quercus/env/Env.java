@@ -1217,7 +1217,7 @@ public class Env
    */
   public ConnectionEntry getConnection(String driver, String url,
                                        String userName, String password,
-                                       boolean isReuse)
+                                       String dbname, boolean isReuse)
     throws Exception
   {
     // XXX: connections might not be reusable (see gallery2), because
@@ -1240,7 +1240,7 @@ public class Env
     }
 
     ConnectionEntry entry = new ConnectionEntry(this);
-    entry.init(database, userName, password);
+    entry.init(database, userName, password, dbname);
 
     ConnectionEntry oldEntry = null;
 

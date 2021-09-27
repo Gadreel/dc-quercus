@@ -3,6 +3,7 @@ package dcraft.quercus;
 import com.caucho.quercus.QuercusEngine;
 import com.caucho.quercus.QuercusExitException;
 import com.caucho.quercus.env.*;
+import com.caucho.quercus.function.AbstractFunction;
 import com.caucho.quercus.page.InterpretedPage;
 import com.caucho.quercus.page.QuercusPage;
 import com.caucho.quercus.parser.QuercusParser;
@@ -12,9 +13,23 @@ import com.caucho.vfs.StringWriter;
 import com.caucho.vfs.WriteStream;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class DCQuercusEngine extends QuercusEngine {
+    protected Map<String, AbstractFunction> funcs = new HashMap<>();
+
+    public DCQuercusEngine() {
+        this.withFunc("dc_debug", new DCDebug());
+    }
+
+    public DCQuercusEngine withFunc(String name, AbstractFunction func) {
+        this.funcs.put(name, func);
+
+        return this;
+    }
+
     public DCQuercusResult dc_execute(ReadStream reader, Value args) {
         return this.dc_execute(reader, new Consumer<Env>() {
             @Override
@@ -41,7 +56,8 @@ public class DCQuercusEngine extends QuercusEngine {
 
             Env env = new Env(this.getQuercus(), page, out);
 
-            env.addFunction("dc_debug", new DCDebug());
+            for (String name : this.funcs.keySet())
+                env.addFunction(name, this.funcs.get(name));
 
             if (prepenv != null) {
                 prepenv.accept(env);

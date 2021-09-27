@@ -12,6 +12,7 @@ if (function_exists('date_default_timezone_set'))
 	date_default_timezone_set('America/Chicago');
 
 
+/*
 global $wpdb;
 
 $sql = $wpdb->prepare("SELECT * FROM ws_config WHERE id = %d", 1);
@@ -31,7 +32,56 @@ $wpdb->update(
 	array('%d'),
 	array('%d')
 );
+*/
 
+require('./wp-includes/plugin.php');
+require('./wp-includes/Requests/Hooker.php');
+require('./wp-includes/Requests/Hooks.php');
+require('./wp-includes/class-wp-http-requests-hooks.php');
+require('./wp-includes/class-wp-http-proxy.php');
+require('./wp-includes/class-http.php');
+require('./wp-includes/class-wp-http-response.php');
+require('./wp-includes/class-wp-http-requests-response.php');
+require('./wp-includes/http.php');
+
+
+$authname = "xxxxxxxxxxxxxxxxxxxx";
+$authkey = "666666666666666666666666666";
+$authendpoint = "https://apitest.authorize.net/xml/v1/request.api";
+
+dc_debug("C1: " . $authendpoint);
+
+$reqbody = "{
+		\"authenticateTestRequest\": {
+			\"merchantAuthentication\": {
+					\"name\": \"{$authname}\",
+					\"transactionKey\": \"{$authkey}\"
+			}
+		}
+}";
+
+dc_debug("C2: " . $reqbody);
+
+dc_debug("C3: " . function_exists("wp_remote_post"));
+
+$response = wp_remote_post($authendpoint, array(
+	'headers' => array(
+		'Accept' => 'application/json',
+		'Content-Type' => 'application/json'
+	),
+	'data_format' => 'body',
+	'body' => $reqbody
+));
+
+$body = trim(substr($response['body'],3));
+
+dc_debug("D: " . $body);
+
+$resrec = json_decode($body);
+
+var_dump($resrec);
+
+echo $resrec->messages->message[0]->code;
 
 echo "done";
 

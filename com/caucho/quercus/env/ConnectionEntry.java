@@ -29,6 +29,8 @@
 
 package com.caucho.quercus.env;
 
+import org.mariadb.jdbc.MariaDbPoolDataSource;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.*;
@@ -45,6 +47,7 @@ public class ConnectionEntry implements EnvCleanup
   private DataSource _ds;
   private String _user;
   private String _password;
+  private String _dbname;
   private Connection _conn;
   private boolean _isReuse;
 
@@ -53,11 +56,12 @@ public class ConnectionEntry implements EnvCleanup
     _env = env;
   }
 
-  public void init(DataSource ds, String user, String password)
+  public void init(DataSource ds, String user, String password, String dbname)
   {
     _ds = ds;
     _user = user;
     _password = password;
+    _dbname = dbname;
   }
 
   public void connect(boolean isReuse)
@@ -67,6 +71,13 @@ public class ConnectionEntry implements EnvCleanup
       throw new IllegalStateException();
 
     _isReuse = isReuse;
+
+    // %%% APW very hacky but we need the dbname
+    if (_ds instanceof MariaDbPoolDataSource) {
+      // only if pool not set yet
+      if (((MariaDbPoolDataSource)_ds).testGetPool() == null)
+        ((MariaDbPoolDataSource)_ds).setDatabaseName(_dbname);
+    }
 
     if (_user != null && ! "".equals(_user)) {
       _conn = _ds.getConnection(_user, _password);

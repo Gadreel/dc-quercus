@@ -75,7 +75,7 @@ public class SQLite3 extends JdbcConnectionResource
       _driver = driver;
 
       ConnectionEntry jConn
-        = env.getConnection(driver, url, null, null, ! isNewLink);
+        = env.getConnection(driver, url, null, null, null, ! isNewLink);
 
       return jConn;
     }

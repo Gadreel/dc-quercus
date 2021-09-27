@@ -130,7 +130,7 @@ public class Postgres extends JdbcConnectionResource
 
       ConnectionEntry jConn;
 
-      jConn = env.getConnection(driver, url, userName, password, ! isNewLink);
+      jConn = env.getConnection(driver, url, userName, password, null, ! isNewLink);
 
       return jConn;
     }

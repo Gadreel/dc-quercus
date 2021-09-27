@@ -1008,8 +1008,9 @@ public abstract class JdbcConnectionResource
   public void setCatalog(Env env, String name)
     throws SQLException
   {
-    if (_catalog != null && _catalog.equals(name))
-      return;
+    // %%% APW this needs to work at some point after connect with a dbname, best to just always run it
+    //if (_catalog != null && _catalog.equals(name))
+    //  return;
 
     clearErrors();
 
