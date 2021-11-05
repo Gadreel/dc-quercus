@@ -1,21 +1,9 @@
 <?php
+$bread = "🦝";
 
-echo "1: " . getcwd() . "\n";
+echo "1 - " . $dc_args["title"] . " plus\n";
 
-chdir("./php");
+echo "done and {$bread} over \n";
 
-echo "2: " . getcwd() . "\n";
-
-require('./funcs/scommon.php');
-
-echo "A" . getFoo() . "B\n";
-
-echo "1 - " . $dc_args["title"] . "\n";
-echo "2 - " . $dc_args["number"] . "\n";
-echo "3 - " . $dc_args["p"]["title"] . "\n";
-
-echo "done\n";
-
-return 9.95;
-
+return "🙈";
 ?>

@@ -697,6 +697,10 @@ public class QuercusContext
 
         _databaseMap.put(key, database);
 
+        // APW default database becomes the first one we open
+        if (_database == null)
+          _database = database;
+
         return database;
       } catch (ClassNotFoundException e) {
         throw new QuercusModuleException(e);
@@ -706,6 +710,10 @@ public class QuercusContext
         throw new QuercusModuleException(e);
       }
     }
+  }
+
+  public Map<String,DataSource> getDatabases() {
+    return  _databaseMap;
   }
 
   /**

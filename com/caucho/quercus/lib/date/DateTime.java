@@ -41,7 +41,7 @@ import com.caucho.util.QDate;
 /**
  * Date functions.
  */
-public class DateTime implements DateTimeInterface, Cloneable
+public class DateTime implements DateTimeInterface, Cloneable, Comparable<DateTime>
 {
   private static final L10N L = new L10N(DateTime.class);
   
@@ -256,6 +256,7 @@ public class DateTime implements DateTimeInterface, Cloneable
     if (qDate0.getLocalTime() < qDate1.getLocalTime()) {
       qDate0 = dateTime._qDate;
       qDate1 = _qDate;
+      dateInterval.invert = 1;
     }
 
     int year = qDate0.getYear() - qDate1.getYear();
@@ -334,5 +335,13 @@ public class DateTime implements DateTimeInterface, Cloneable
     Env env = Env.getInstance();
 
     return format(env, env.createString("now")).toString();
+  }
+
+  @Override
+  public int compareTo(DateTime dateTime) {
+    if (dateTime == null)
+      return (int) this.getTime();
+
+    return (int) (this.getTime() - dateTime.getTime());
   }
 }

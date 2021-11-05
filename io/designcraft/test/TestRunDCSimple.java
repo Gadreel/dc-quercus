@@ -39,16 +39,23 @@ public class TestRunDCSimple {
         ArrayValue phpargs = new ArrayValueImpl();
 
         phpargs.put(StringValue.create("p"), p);
-        phpargs.put("title", "top level");
         phpargs.put("number", 25);
 
         //Value phpargs = JsonModule.json_decode(null, (StringValue) StringValue.create("{ \"title\": \"top level\", \"number\": 55, \"p\": { \"title\": \"from p\" } }"), true);
 
         try {
-            DCQuercusResult result = engine.dc_execute(path.openRead(), phpargs);
+            DCQuercusResult result = engine.dc_execute(path.openRead(), new Consumer<Env>() {
+                @Override
+                public void accept(Env env) {
+                    phpargs.put(env, "title", "top level: \uD83D\uDE4F plus");
+
+                    env.setGlobalValue("dc_args", phpargs);
+                }
+            });
 
             System.out.println("value: " + result.returned);
             System.out.println("output: " + result.output);
+            System.out.println("unicode: \uD83D\uDE4F");
         } catch (IOException e) {
             e.printStackTrace();
         }

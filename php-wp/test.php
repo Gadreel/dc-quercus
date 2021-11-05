@@ -34,17 +34,6 @@ $wpdb->update(
 );
 */
 
-require('./wp-includes/plugin.php');
-require('./wp-includes/Requests/Hooker.php');
-require('./wp-includes/Requests/Hooks.php');
-require('./wp-includes/class-wp-http-requests-hooks.php');
-require('./wp-includes/class-wp-http-proxy.php');
-require('./wp-includes/class-http.php');
-require('./wp-includes/class-wp-http-response.php');
-require('./wp-includes/class-wp-http-requests-response.php');
-require('./wp-includes/http.php');
-
-
 $authname = "xxxxxxxxxxxxxxxxxxxx";
 $authkey = "666666666666666666666666666";
 $authendpoint = "https://apitest.authorize.net/xml/v1/request.api";
@@ -73,7 +62,7 @@ $response = wp_remote_post($authendpoint, array(
 	'body' => $reqbody
 ));
 
-$body = trim(substr($response['body'],3));
+$body = trim(substr($response['body'],1));
 
 dc_debug("D: " . $body);
 

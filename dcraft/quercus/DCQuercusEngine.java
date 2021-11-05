@@ -21,6 +21,8 @@ public class DCQuercusEngine extends QuercusEngine {
     protected Map<String, AbstractFunction> funcs = new HashMap<>();
 
     public DCQuercusEngine() {
+        this.setIni("unicode.semantics", "true");
+
         this.withFunc("dc_debug", new DCDebug());
     }
 
@@ -40,17 +42,25 @@ public class DCQuercusEngine extends QuercusEngine {
     }
 
     public DCQuercusResult dc_execute(ReadStream reader, Consumer<Env> prepenv) {
+        return this.dc_execute(reader, prepenv, null);
+    }
+
+    public DCQuercusResult dc_execute(ReadStream reader, Consumer<Env> prepenv, Consumer<Env> finenv) {
         DCQuercusResult result = new DCQuercusResult();
 
         result.returned = NullValue.NULL;
 
         try (reader) {
+            reader.setEncoding("utf-8");
+
             QuercusProgram program = QuercusParser.parse(this.getQuercus(), null, reader);
 
-            StringWriter writer = new StringWriter();
+            DCStringWriter writer = new DCStringWriter();
+            //writer.setWriteEncoding("WINDOWS-HACK");
 
             WriteStream out =  writer.openWrite();
             out.setNewlineString("\n");
+            //out.setEncoding("WINDOWS-HACK");
 
             QuercusPage page = new InterpretedPage(program);
 
@@ -67,6 +77,10 @@ public class DCQuercusEngine extends QuercusEngine {
                 env.start();
 
                 result.returned = program.execute(env);
+
+                if (finenv != null) {
+                    finenv.accept(env);
+                }
             }
             catch (QuercusExitException x) {
                 System.out.println("execute: " + x);

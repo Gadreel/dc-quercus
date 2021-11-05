@@ -2,10 +2,7 @@ package io.designcraft.test;
 
 import com.caucho.quercus.QuercusEngine;
 import com.caucho.quercus.QuercusExitException;
-import com.caucho.quercus.env.Env;
-import com.caucho.quercus.env.LongValue;
-import com.caucho.quercus.env.NullValue;
-import com.caucho.quercus.env.Value;
+import com.caucho.quercus.env.*;
 import com.caucho.quercus.lib.db.JdbcDriverContext;
 import com.caucho.quercus.page.InterpretedPage;
 import com.caucho.quercus.page.QuercusPage;
@@ -25,8 +22,9 @@ public class TestRunWPDB {
         System.out.println("hi");
 
         QuercusEngine engine = new QuercusEngine();
-        engine.init();
         engine.setIni("foo", "bar");
+        engine.setIni("unicode.semantics", "true");
+        engine.init();
         engine.setOutputStream(System.out);
 
         JdbcDriverContext ctx = engine.getQuercus().getJdbcDriverContext();
