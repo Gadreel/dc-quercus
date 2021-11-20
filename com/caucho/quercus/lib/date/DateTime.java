@@ -153,6 +153,11 @@ public class DateTime implements DateTimeInterface, Cloneable, Comparable<DateTi
     return this;
   }
 
+  public DateTime sub(DateInterval interval) {
+    interval.invert = 1 - interval.invert;
+    return add(interval);
+  }
+
   @Override
   public Object clone()
   {
