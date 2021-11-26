@@ -75,6 +75,8 @@ public class TestRunWPDB {
             env.addFunction("dc_debug", new DCDebug());
             env.setGlobalValue("runnumber", LongValue.create(runnum));
 
+            env.addFunction("fwrite2", new TestFWrite());
+
             Value value = NullValue.NULL;
 
             try {
